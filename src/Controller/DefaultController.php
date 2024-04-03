@@ -12,19 +12,20 @@ class DefaultController {
         return $response;
     }
 
+
     #[
         Route(
-            path: '/blog/{id}',
+            path: '/blog/{name}',
             name: 'blog',
             methods: ["GET"],
             schemes:["HTTPS"],
             defaults: [
-                "id" => "",
+                "name" => "",
                 "foo" => "bar"
             ],
-            requirements: [
-                'id' => '\d+'
-            ]
+            // requirements: [
+            //     'name' => '[a-zA-Z]'
+            // ]
 
             )
     ]
@@ -35,4 +36,19 @@ class DefaultController {
         dd($request);
         return new Response('Blog');
     }
+
+    
+    #[
+        Route(
+            path: '/blog/homepage',
+            name: 'homepage',
+            methods: ["GET"],
+            priority: -1
+            )
+    ]
+
+    public function blogHomePage(){
+        return new Response('blog homepage');
+    }
+
 }
