@@ -18,13 +18,17 @@ class DefaultController {
             name: 'blog',
             methods: ["GET"],
             schemes:["HTTPS"],
-            defaults: [
-                "name" => "Lulu",
-            ]
+            // defaults: [
+            //     "name" => "Lulu",
+            // ]
 
             )
     ]
-    public function blog(){
-      return new Response('Blog');
+    public function blog(Request $request, $name){
+        $title = $request->attributes->get('name');
+        $allRouteparams = $request->attributes->all();
+        $allparam = $request->attributes->get('_route_params');
+        dd($name);
+        return new Response('Blog');
     }
 }
