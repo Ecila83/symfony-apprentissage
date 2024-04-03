@@ -5,6 +5,8 @@ use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Attribute\Route;
 
+#[Route('/blog', name: 'blog_')]
+
 class DefaultController {
     public function index(Request $request){
         // dd($request);
@@ -15,7 +17,7 @@ class DefaultController {
 
     #[
         Route(
-            path: '/blog/{name}',
+            path: '/{name}',
             name: 'blog',
             methods: ["GET"],
             schemes:["HTTPS"],
@@ -40,10 +42,10 @@ class DefaultController {
     
     #[
         Route(
-            path: '/blog/homepage',
+            path: '/homepage',
             name: 'homepage',
             methods: ["GET"],
-            priority: -1
+            priority: 1
             )
     ]
 
