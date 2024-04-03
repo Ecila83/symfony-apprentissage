@@ -14,21 +14,25 @@ class DefaultController {
 
     #[
         Route(
-            path: '/blog/{name}',
+            path: '/blog/{id}',
             name: 'blog',
             methods: ["GET"],
             schemes:["HTTPS"],
-            // defaults: [
-            //     "name" => "Lulu",
-            // ]
+            defaults: [
+                "id" => "",
+                "foo" => "bar"
+            ],
+            requirements: [
+                'id' => '\d+'
+            ]
 
             )
     ]
-    public function blog(Request $request, $name){
-        $title = $request->attributes->get('name');
-        $allRouteparams = $request->attributes->all();
-        $allparam = $request->attributes->get('_route_params');
-        dd($name);
+    public function blog(Request $request){
+        $title = $request->attributes->get('id');
+        // $allRouteparams = $request->attributes->all();
+        // $allparam = $request->attributes->get('_route_params');
+        dd($request);
         return new Response('Blog');
     }
 }
