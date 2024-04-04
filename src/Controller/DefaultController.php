@@ -6,17 +6,30 @@ use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Attribute\Route;
-
-
+use Symfony\Component\Routing\Generator\UrlGeneratorInterface;
 
 class DefaultController extends AbstractController {
     #[Route('/')]
     public function index(){
+    // rediriger a partir d'une url generée relative
+    // $url = $this->generateUrl('app_blog',['title' => 'bar']);
+    // dd($url);
+
+    // url  absolute
+    $url = $this->generateUrl('app_blog',['title' => 'bar'], UrlGeneratorInterface::ABSOLUTE_URL);
+    dd($url);
+
+
+    // redirection vers une autre page 
+    //    if (true){ 
+    //    return $this->redirectToRoute('app_blog', ['title' => 'je suis un param']);
+    // }
+        
         // retourne un fichier
         // return $this->file('test.txt'); 
 
         // return un fichier twig
-        return $this->render("base.html.twig");
+        // return $this->render("base.html.twig");
         
 
     }

@@ -8,7 +8,7 @@ use Symfony\Component\Routing\Attribute\Route;
 
 class BlogController extends AbstractController
 {
-    #[Route('/blog', name: 'app_blog')]
+    #[Route('/blog/{title}', name: 'app_blog')]
     public function index(): Response
     {
         // return $this->json([
