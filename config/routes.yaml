@@ -4,13 +4,13 @@ controllers:
         namespace: App\Controller
     type: attribute
 
-redirecthomepage:
-    path: /homepage
-    controller: Symfony\Bundle\FrameworkBundle\Controller\RedirectController
-    defaults:
-        route: 'blog_homepage'
-        permanent: true
-        keepQueryParams: true 
+# redirecthomepage:
+#     path: /homepage
+#     controller: Symfony\Bundle\FrameworkBundle\Controller\RedirectController
+#     defaults:
+#         route: 'blog_homepage'
+#         permanent: true
+#         keepQueryParams: true 
 
 
 
