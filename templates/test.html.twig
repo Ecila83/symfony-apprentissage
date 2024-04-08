@@ -6,8 +6,25 @@
     <title>Document</title>
 </head>
 <body>
-    {% if condition %}{% endif %}
-    
-    
+{# je suis un commentaire #}
+
+    <h2>Name :{{product.name}}</h2>
+    <h2>Prix :{{product.price}}</h2>
+    {% if product.price > 60000 %}
+        <h3> c'est cher</h3>
+    {% else %}
+        <h3>Ca n'est pas cher</h3>
+    {% endif %}
+
+<ul>
+    {% for item in [1, 2, 3] %}
+        <li>
+            {{item}}
+        </li>
+        
+    {% endfor %}
+</ul>
+
+    <h2>last update:{{product.lastUpdate}}</h2>
 </body>
 </html>

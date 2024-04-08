@@ -11,8 +11,13 @@ use Symfony\Component\Routing\Generator\UrlGeneratorInterface;
 class DefaultController extends AbstractController {
     #[Route('/')]
     public function index(){
-
-        return $this->render('@emails/emails_welcome.html.twig');
+        $product = [
+            'name' => 'voiture Tesla',
+            'price' => 50000,
+            'lastUpdate' => strtotime('yesterday')
+        ];
+        return $this->render('test.html.twig', ['product' => $product]);
+        // return $this->render('@emails/emails_welcome.html.twig');
         // return $this->render('@AcmeFoo/emails_welcome.html.twig');
 
         // $emailProvider = $this->getParameter('app.email_provider');
