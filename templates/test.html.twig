@@ -6,6 +6,42 @@
     <title>Document</title>
 </head>
 <body>
+{# 
+app.user
+app.debug
+app.request
+app.environment
+app.token
+app.session
+app.flashes
+ #}
+    <pre>
+        {{ dump(app.request.method) }}
+    </pre>
+    <pre>
+        {{ dump(app.debug) }}
+    </pre>
+    <pre>
+        {{ dump(app.user) }}
+    </pre>
+    <pre>
+        {{ dump(app.environment) }}
+    </pre>
+    <pre>
+        {{ dump(app.token) }}
+    </pre>
+    <pre>
+        {{ dump(app.session) }}
+    </pre>
+    <pre>
+        {{ dump(app.flashes) }}
+    </pre>
+    {# dump via template #}
+
+    <pre>
+        {{ dump(product) }}
+    </pre>
+ 
     <h2>last update:{{product.lastUpdate | date('d/m/Y')}}</h2>
 
     <h2>last update:{{product.lastUpdate | format_date(pattern='d MMMM Y', locale='fr')}}</h2>
