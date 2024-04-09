@@ -17,6 +17,14 @@ class DefaultController extends AbstractController {
             'lastUpdate' => strtotime('yesterday')
         ];
         return $this->render('test.html.twig', ['product' => $product, 'h1' => '<h1>hello</h1>']);
+    }
+
+    #[Route(path:'about/list/{name}', name:'about')]
+    public function aboutList($name) {
+        dd($name);
+        return $this->render('base.html.twig');
+
+    }
         // return $this->render('@emails/emails_welcome.html.twig');
         // return $this->render('@AcmeFoo/emails_welcome.html.twig');
 
@@ -45,7 +53,7 @@ class DefaultController extends AbstractController {
             // return $this->render("base.html.twig");
             
 
-        }
+
 
 
         // #[

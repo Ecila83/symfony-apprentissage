@@ -9,8 +9,11 @@
     <h2>last update:{{product.lastUpdate | date('d/m/Y')}}</h2>
 
     <h2>last update:{{product.lastUpdate | format_date(pattern='d MMMM Y', locale='fr')}}</h2>
+
     <h2>last update:{{product.lastUpdate | format_date('full', locale='fr')}}</h2>
+
     <h2>last update:{{product.lastUpdate | format_datetime('none','short', locale='fr')}}</h2>
+
     <h2>last update:{{product.lastUpdate | format_datetime('long', locale='fr')}}</h2>
 
 
@@ -50,6 +53,13 @@
     {% endfor %}
 
     <h3>{{[1, 2, 3] | first}}</h3>
+
+    <img src=" {{ absolute_url(asset('fee.jpg')) }} " alt="">
+
+    <a href="{{path('about', { name:'Noémie'})}}">Lien</a>
+    <a href="{{url('about', { name:'Zoé'})}}">Lien2</a>
+
+    <link rel="stylesheet" href="{{ asset('style.css')}}">
 
 </body>
 </html>
