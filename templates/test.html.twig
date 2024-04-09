@@ -6,6 +6,16 @@
     <title>Document</title>
 </head>
 <body>
+    <h2>last update:{{product.lastUpdate | date('d/m/Y')}}</h2>
+
+    <h2>last update:{{product.lastUpdate | format_date(pattern='d MMMM Y', locale='fr')}}</h2>
+    <h2>last update:{{product.lastUpdate | format_date('full', locale='fr')}}</h2>
+    <h2>last update:{{product.lastUpdate | format_datetime('none','short', locale='fr')}}</h2>
+    <h2>last update:{{product.lastUpdate | format_datetime('long', locale='fr')}}</h2>
+
+
+
+
 {# je suis un commentaire #}
 
     <h2>Name :{{product.name}}</h2>
@@ -16,15 +26,30 @@
         <h3>Ca n'est pas cher</h3>
     {% endif %}
 
-<ul>
-    {% for item in [1, 2, 3] %}
-        <li>
-            {{item}}
-        </li>
+    <ul>
+        {% for item in [1, 2, 3] %}
+            <li>
+                {{item}}
+            </li>
         
-    {% endfor %}
-</ul>
+        {% endfor %}
+    </ul>
 
-    <h2>last update:{{product.lastUpdate}}</h2>
+    <h2>{{'Bonjour' | upper }}</h2>
+
+    <h2>{{'Bonjour' | capitalize }}</h2>
+
+    <h2>{{h1 | raw}}</h2>
+
+    <h2>{{[1, 2, 3] | join(',')}}</h2>
+
+    <h2>{{[1, 2, 3] | map(a => a*2) |join(' ') }}</h2>
+
+    {% for item in [1, 2, 3] | filter(a => a > 1 )%}
+       {{ item }}   
+    {% endfor %}
+
+    <h3>{{[1, 2, 3] | first}}</h3>
+
 </body>
 </html>

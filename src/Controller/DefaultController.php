@@ -16,7 +16,7 @@ class DefaultController extends AbstractController {
             'price' => 50000,
             'lastUpdate' => strtotime('yesterday')
         ];
-        return $this->render('test.html.twig', ['product' => $product]);
+        return $this->render('test.html.twig', ['product' => $product, 'h1' => '<h1>hello</h1>']);
         // return $this->render('@emails/emails_welcome.html.twig');
         // return $this->render('@AcmeFoo/emails_welcome.html.twig');
 
