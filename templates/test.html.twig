@@ -1,12 +1,9 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Document</title>
-</head>
-<body>
+{% extends "./base.html.twig" %}
+
+
+{% block content %}
     {{include('./partials/_profile.html.twig',{user: author})}}
+
 
 {# 
 app.user
@@ -98,6 +95,5 @@ app.flashes
     <a href="{{url('about', { name:'Zoé'})}}">Lien2</a>
 
     <link rel="stylesheet" href="{{ asset('style.css')}}">
-
-</body>
-</html>
+ 
+    {% endblock %}

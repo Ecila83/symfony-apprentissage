@@ -1,0 +1,9 @@
+.content{
+    display:flex;
+}
+
+.sidebar {
+    flex: 0 0 200px;
+    background: teal;
+    margin: 0px;
+}

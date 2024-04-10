@@ -1,0 +1,22 @@
+{# toute la base du body il extends d'office le fichier base#}
+{% extends "base.html.twig" %}
+
+{% block stylesheets %}
+            <link rel="stylesheet" href="{{ asset('css/layout.css') }}">
+            <link rel="stylesheet" href="{{ asset('css/style.css') }}">
+
+{% endblock %}
+
+{% block body %}
+    <div class="contain">
+    <ul class="sidebar">
+        <li>page 1</li>
+        <li>page 2</li>
+        <li>page 3</li>
+    </ul>
+    <div class="main">
+        {% block content %}        
+        {% endblock %}
+    </div>
+    </div>
+{% endblock %}
