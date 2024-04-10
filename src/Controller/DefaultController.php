@@ -11,12 +11,20 @@ use Symfony\Component\Routing\Generator\UrlGeneratorInterface;
 class DefaultController extends AbstractController {
     #[Route('/')]
     public function index(){
+        $user = [
+            'name' => 'Noémie',
+            'email' => 'noémie@fd.com'
+        ];
         $product = [
             'name' => 'voiture Tesla',
             'price' => 50000,
             'lastUpdate' => strtotime('yesterday')
         ];
-        return $this->render('test.html.twig', ['product' => $product, 'h1' => '<h1>hello</h1>']);
+        return $this->render('test.html.twig', [
+            'product' => $product, 
+            'h1' => '<h1>hello</h1>',
+            'author' => $user
+        ]);
     }
 
     #[Route(path:'about/list/{name}', name:'about')]
