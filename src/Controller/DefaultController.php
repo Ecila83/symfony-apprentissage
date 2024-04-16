@@ -1,16 +1,30 @@
 <?php
 namespace App\Controller;
 
+use Psr\Log\LoggerInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Attribute\Route;
+use Symfony\Component\Filesystem\Filesystem;
 use Symfony\Component\Routing\Generator\UrlGeneratorInterface;
 
 class DefaultController extends AbstractController {
+
+    public function __construct(private Filesystem $filesystem)
+    {
+        
+    }
     #[Route('/')]
-    public function index():Response{
+    public function index(LoggerInterface $log ){
+// creer un dosssier
+        // $this->filesystem->mkdir('photos');
+// creer un fichier   
+        // $this->filesystem->touch('photos/Text.txt');
+// ecrire dans le fichier 
+        $this->filesystem->appendToFile('photos/Text.txt', 'Je suis un contenut ');
+        $log->info("je suis un message de log");
         // $user = [
         //     'name' => 'Noémie',
         //     'email' => 'noémie@fd.com'
