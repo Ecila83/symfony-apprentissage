@@ -1,6 +1,7 @@
 <?php
 namespace App\Controller;
 
+use App\Services\MyLog;
 use Psr\Log\LoggerInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\JsonResponse;
@@ -17,14 +18,19 @@ class DefaultController extends AbstractController {
         
     }
     #[Route('/')]
-    public function index(LoggerInterface $log ){
+    public function index( MyLog $message){
+        $message->writenLog('un message');
+        return $this->render('page1.html.twig');
+      
+    }
+    // public function index(LoggerInterface $log ){
 // creer un dosssier
         // $this->filesystem->mkdir('photos');
 // creer un fichier   
         // $this->filesystem->touch('photos/Text.txt');
 // ecrire dans le fichier 
-        $this->filesystem->appendToFile('photos/Text.txt', 'Je suis un contenut ');
-        $log->info("je suis un message de log");
+        // $this->filesystem->appendToFile('photos/Text.txt', 'Je suis un contenut ');
+        // $log->info("je suis un message de log");
         // $user = [
         //     'name' => 'Noémie',
         //     'email' => 'noémie@fd.com'
@@ -40,9 +46,7 @@ class DefaultController extends AbstractController {
         //     'author' => $user
         // ]);
 
-        return $this->render('page1.html.twig');
-      
-    }
+ 
 
     #[Route(path:'about/list/{name}', name:'about')]
     public function aboutList($name) {
