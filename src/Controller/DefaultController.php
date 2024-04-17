@@ -23,23 +23,32 @@ class DefaultController extends AbstractController {
     // }
 
     #[Route('/')]
-    public function index(){
+    public function index(Request $request){
 
         $form = $this->createFormBuilder()
              ->add('Content', TextType::class, [
                 // 'data' => 'par defaut',
                 // 'disabled'=> true,
-                // 'required' => false,
+                'required' => false,
                 'label' => 'je suis un label',
                 'attr' => [
                     'class' => 'myclass',
                     'placeholder' => 'entrez un contenu'
                 ],
                 'help' => 'le contenu est important ',
-                'row_attr' => 'myrow'
+                'row_attr' => [
+                    'class' => 'myrow'
+                ]
              ])
              ->add('Submit', SubmitType::class)
+            //  ->setMethod('get')
              ->getForm();
+
+        $form->handleRequest($request);
+        
+        if($form->isSubmitted() && $form->isValid()){
+            dd($form->getData());
+        }
         return $this->render('page1.html.twig', ['myform'=>$form->createView()]);
       
     }
