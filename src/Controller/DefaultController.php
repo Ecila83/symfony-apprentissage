@@ -11,22 +11,35 @@ use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Attribute\Route;
 use Symfony\Component\Filesystem\Filesystem;
+use Symfony\Component\Form\Extension\Core\Type\SubmitType;
+use Symfony\Component\Form\Extension\Core\Type\TextType;
 use Symfony\Component\Routing\Generator\UrlGeneratorInterface;
 
 class DefaultController extends AbstractController {
 
-    public function __construct(private Filesystem $filesystem)
-    {
+    // public function __construct(private Filesystem $filesystem)
+    // {
         
-    }
+    // }
+
     #[Route('/')]
-    public function index(string $adminEmail, ContainerInterface $container){
-        $mylog = $container->get('App\\Services\\MyLog');
-       
-        $mylog->writenLog('un message');
-        return $this->render('page1.html.twig');
+    public function index(){
+
+        $form = $this->createFormBuilder()
+             ->add('Content', TextType::class)
+             ->add('Submit', SubmitType::class)
+             ->getForm();
+        return $this->render('page1.html.twig', ['myform'=>$form->createView()]);
       
     }
+    // #[Route('/')]
+    // public function index(string $adminEmail, ContainerInterface $container){
+    //     $mylog = $container->get('App\\Services\\MyLog');
+       
+    //     $mylog->writenLog('un message');
+    //     return $this->render('page1.html.twig');
+      
+    // }
     // public function index(LoggerInterface $log ){
 // creer un dosssier
         // $this->filesystem->mkdir('photos');
