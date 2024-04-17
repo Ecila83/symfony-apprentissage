@@ -2,8 +2,10 @@
 namespace App\Controller;
 
 use App\Services\MyLog;
+use Psr\Container\ContainerInterface as ContainerContainerInterface;
 use Psr\Log\LoggerInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
+use Symfony\Component\DependencyInjection\ContainerInterface;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
@@ -18,8 +20,10 @@ class DefaultController extends AbstractController {
         
     }
     #[Route('/')]
-    public function index( MyLog $message){
-        $message->writenLog('un message');
+    public function index(string $adminEmail, ContainerInterface $container){
+        $mylog = $container->get('App\\Services\\MyLog');
+       
+        $mylog->writenLog('un message');
         return $this->render('page1.html.twig');
       
     }
