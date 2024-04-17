@@ -26,7 +26,18 @@ class DefaultController extends AbstractController {
     public function index(){
 
         $form = $this->createFormBuilder()
-             ->add('Content', TextType::class)
+             ->add('Content', TextType::class, [
+                // 'data' => 'par defaut',
+                // 'disabled'=> true,
+                // 'required' => false,
+                'label' => 'je suis un label',
+                'attr' => [
+                    'class' => 'myclass',
+                    'placeholder' => 'entrez un contenu'
+                ],
+                'help' => 'le contenu est important ',
+                'row_attr' => 'myrow'
+             ])
              ->add('Submit', SubmitType::class)
              ->getForm();
         return $this->render('page1.html.twig', ['myform'=>$form->createView()]);

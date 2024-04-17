@@ -7,3 +7,8 @@
     background: teal;
     margin: 0px;
 }
+
+form{
+    display: flex;
+    justify-content: center;
+}
