@@ -11,12 +11,13 @@ use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Attribute\Route;
 use Symfony\Component\Filesystem\Filesystem;
+use Symfony\Component\Form\Extension\Core\Type\CheckboxType;
 use Symfony\Component\Form\Extension\Core\Type\SubmitType;
 use Symfony\Component\Form\Extension\Core\Type\TextType;
 use Symfony\Component\Routing\Generator\UrlGeneratorInterface;
 
 class DefaultController extends AbstractController {
-
+ 
     // public function __construct(private Filesystem $filesystem)
     // {
         
@@ -25,8 +26,10 @@ class DefaultController extends AbstractController {
     #[Route('/')]
     public function index(Request $request){
 
-        $form = $this->createFormBuilder()
-             ->add('Content', TextType::class, [
+        $todo = new Todo('Je suis une todo');
+
+        $form = $this->createFormBuilder($todo)
+             ->add('content', TextType::class, [
                 // 'data' => 'par defaut',
                 // 'disabled'=> true,
                 'required' => false,
@@ -40,6 +43,8 @@ class DefaultController extends AbstractController {
                     'class' => 'myrow'
                 ]
              ])
+             ->add('type', TextType::class,['mapped'=> false])
+             ->add('done', CheckboxType::class, ['required' => false])
              ->add('Submit', SubmitType::class)
             //  ->setMethod('get')
              ->getForm();
@@ -47,7 +52,7 @@ class DefaultController extends AbstractController {
         $form->handleRequest($request);
         
         if($form->isSubmitted() && $form->isValid()){
-            dd($form->getData());
+            dd($todo);
         }
         return $this->render('page1.html.twig', ['myform'=>$form->createView()]);
       
@@ -162,3 +167,12 @@ class DefaultController extends AbstractController {
 
 }
 
+class Todo {
+    public function __construct(
+        public string $content,
+        public bool $done =  false,
+    )
+    {
+        
+    }                       
+}
