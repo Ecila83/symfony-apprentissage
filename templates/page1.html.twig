@@ -1,5 +1,27 @@
 {% extends "./layout.html.twig" %}
 
 {% block content %}
-    {{form(myform) }}
+
+<style>
+.my-custom-row{
+    display:flex;
+    flex-direction:column;
+}
+</style>
+
+{{form_start(myform,{'method':'get', 'attr': {'class':'my_form'}})}}
+
+{# {{form_row(myform.pays, {'row_attr':{'class': 'myrowclass2'}})}} #}
+<div class="my-custom-row">
+    {{form_label(myform.pays, 'Mon Label')}}
+    
+    {{form_widget(myform.pays)}}
+    {# {{form_help(myform.pays)}} #}
+</div>
+<ul>
+    {{form_errors(myform.pays)}}
+</ul>
+
+{{form_end(myform)}}
+
 {% endblock %}

@@ -37,28 +37,30 @@ class DefaultController extends AbstractController {
         $todo = new Todo('Je suis une todo', 'techno');
 
         $form = $this->createFormBuilder($todo)
-             ->add('content', TextType::class, [
-                // 'data' => 'par defaut',
-                // 'disabled'=> true,
-                'required' => false,
-                'label' => 'je suis un label',
-                'attr' => [
-                    'class' => 'myclass',
-                    'placeholder' => 'entrez un contenu'
-                ],
-                'help' => 'le contenu est important ',
-                'row_attr' => [
-                    'class' => 'my-row'
-                ]
-             ])
-             ->add('type', ChoiceType::class,[
-                'choices' => [
-                   'Techno' => 'techno',
-                   'Nature' => 'nature'
-                ],
-                 'choice_attr' => function($choice, $key, $value){
-                    return ['class' => 'my-class-option'];
-                 },
+             ->add('content', TextType::class, 
+            //  [
+            //     // 'data' => 'par defaut',
+            //     // 'disabled'=> true,
+            //     'required' => false,
+            //     'label' => 'je suis un label',
+            //     'attr' => [
+            //         'class' => 'myclass',
+            //         'placeholder' => 'entrez un contenu'
+            //     ],
+            //     'help' => 'le contenu est important ',
+            //     'row_attr' => [
+            //         'class' => 'my-row'
+            //     ]
+            //  ]
+             )
+            //  ->add('type', ChoiceType::class,[
+            //     'choices' => [
+            //        'Techno' => 'techno',
+            //        'Nature' => 'nature'
+            //     ],
+            //      'choice_attr' => function($choice, $key, $value){
+            //         return ['class' => 'my-class-option'];
+            //      },
 
                 //  'choice_filter' => function($option){
                 //     return $option != 'nature';
@@ -68,18 +70,18 @@ class DefaultController extends AbstractController {
                 //  'multiple' => true
             
 
-                ])
+                // ])
              ->add('pays', CountryType::class,['mapped' => false] )
-             ->add('date', DateType::class, [
-                'mapped' =>false,
-                'widget' => 'choice',
-                'input' => 'datetime',
-                'html5'=> false,
-                'attr'=> [
-                    'class' => 'js-picker'
-                ],
-                'days' => range(1,15),
-                'months' => range(1,6),            ])
+            //  ->add('date', DateType::class, [
+            //     'mapped' =>false,
+            //     'widget' => 'choice',
+            //     'input' => 'datetime',
+            //     'html5'=> false,
+            //     'attr'=> [
+            //         'class' => 'js-picker'
+            //     ],
+            //     'days' => range(1,15),
+                // 'months' => range(1,6),            ])
              ->add('done', CheckboxType::class, ['required' => false])
              ->add('Submit', SubmitType::class)
             //  ->setMethod('get')
