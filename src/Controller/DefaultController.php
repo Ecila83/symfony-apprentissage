@@ -1,24 +1,28 @@
 <?php
 namespace App\Controller;
 
+use Assert\Lenght;
 use App\Services\MyLog;
-use Psr\Container\ContainerInterface as ContainerContainerInterface;
 use Psr\Log\LoggerInterface;
-use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
-use Symfony\Component\DependencyInjection\ContainerInterface;
-use Symfony\Component\HttpFoundation\JsonResponse;
+use Symfony\Component\Filesystem\Filesystem;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Attribute\Route;
-use Symfony\Component\Filesystem\Filesystem;
-use Symfony\Component\Form\Extension\Core\Type\CheckboxType;
-use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
-use Symfony\Component\Form\Extension\Core\Type\CountryType;
-use Symfony\Component\Form\Extension\Core\Type\SubmitType;
-use Symfony\Component\Form\Extension\Core\Type\TextType;
-use Symfony\Component\Routing\Generator\UrlGeneratorInterface;
-use Symfony\Component\Form\Extension\Core\Type\DateType;
+use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\Validator\Constraints\Choice;
+use Symfony\Component\Validator\Constraints\NotBlank;
+use Symfony\Component\Form\Extension\Core\Type\DateType;
+use Symfony\Component\Form\Extension\Core\Type\TextType;
+use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
+use Symfony\Component\Form\Extension\Core\Type\SubmitType;
+use Symfony\Component\Form\Extension\Core\Type\CountryType;
+use Symfony\Component\Form\Extension\Core\Type\CheckboxType;
+use Symfony\Component\DependencyInjection\ContainerInterface;
+use Symfony\Component\Routing\Generator\UrlGeneratorInterface;
+use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
+use Psr\Container\ContainerInterface as ContainerContainerInterface;
+use Symfony\Component\Validator\Constraints\Length;
+use Symfony\Component\Validator\Constraints\Email;
 
 class DefaultController extends AbstractController {
  
@@ -44,7 +48,7 @@ class DefaultController extends AbstractController {
                 ],
                 'help' => 'le contenu est important ',
                 'row_attr' => [
-                    'class' => 'myrow'
+                    'class' => 'my-row'
                 ]
              ])
              ->add('type', ChoiceType::class,[
@@ -201,7 +205,22 @@ class DefaultController extends AbstractController {
 
 class Todo {
     public function __construct(
-        public string $content,
+        #[Email(message:'pas correcte')]
+        #[NotBlank(message: 'Je ne peut pas etre vide ')] 
+        #[Length(
+            min: 5,
+            max: 30,
+            minMessage: 'Trop court',
+            maxMessage: 'Trop long'
+
+        )]
+        public ?string $content,
+        #[Choice(
+            choices:['techno', 'nature'],
+            message: 'Mauvaise valeur',
+            multiple: true,
+            multipleMessage:'une des valeur n\'est pas correcte'
+        )]
         public string $type,
         public bool $done =  false,
     )
