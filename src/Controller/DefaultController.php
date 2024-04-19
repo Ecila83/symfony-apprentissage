@@ -12,9 +12,13 @@ use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Attribute\Route;
 use Symfony\Component\Filesystem\Filesystem;
 use Symfony\Component\Form\Extension\Core\Type\CheckboxType;
+use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
+use Symfony\Component\Form\Extension\Core\Type\CountryType;
 use Symfony\Component\Form\Extension\Core\Type\SubmitType;
 use Symfony\Component\Form\Extension\Core\Type\TextType;
 use Symfony\Component\Routing\Generator\UrlGeneratorInterface;
+use Symfony\Component\Form\Extension\Core\Type\DateType;
+use Symfony\Component\Validator\Constraints\Choice;
 
 class DefaultController extends AbstractController {
  
@@ -26,7 +30,7 @@ class DefaultController extends AbstractController {
     #[Route('/')]
     public function index(Request $request){
 
-        $todo = new Todo('Je suis une todo');
+        $todo = new Todo('Je suis une todo', 'techno');
 
         $form = $this->createFormBuilder($todo)
              ->add('content', TextType::class, [
@@ -43,7 +47,35 @@ class DefaultController extends AbstractController {
                     'class' => 'myrow'
                 ]
              ])
-             ->add('type', TextType::class,['mapped'=> false])
+             ->add('type', ChoiceType::class,[
+                'choices' => [
+                   'Techno' => 'techno',
+                   'Nature' => 'nature'
+                ],
+                 'choice_attr' => function($choice, $key, $value){
+                    return ['class' => 'my-class-option'];
+                 },
+
+                //  'choice_filter' => function($option){
+                //     return $option != 'nature';
+
+                //  },
+                //  'expanded' => true,
+                //  'multiple' => true
+            
+
+                ])
+             ->add('pays', CountryType::class,['mapped' => false] )
+             ->add('date', DateType::class, [
+                'mapped' =>false,
+                'widget' => 'choice',
+                'input' => 'datetime',
+                'html5'=> false,
+                'attr'=> [
+                    'class' => 'js-picker'
+                ],
+                'days' => range(1,15),
+                'months' => range(1,6),            ])
              ->add('done', CheckboxType::class, ['required' => false])
              ->add('Submit', SubmitType::class)
             //  ->setMethod('get')
@@ -170,6 +202,7 @@ class DefaultController extends AbstractController {
 class Todo {
     public function __construct(
         public string $content,
+        public string $type,
         public bool $done =  false,
     )
     {
