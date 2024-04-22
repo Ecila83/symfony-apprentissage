@@ -1,6 +1,7 @@
 <?php
 namespace App\Controller;
 
+use App\Form\TodoType;
 use Assert\Lenght;
 use App\Services\MyLog;
 use Psr\Log\LoggerInterface;
@@ -36,8 +37,8 @@ class DefaultController extends AbstractController {
 
         $todo = new Todo('Je suis une todo', 'techno');
 
-        $form = $this->createFormBuilder($todo)
-             ->add('content', TextType::class, 
+        $form = $this->createForm(TodoType::class);
+            //  ->add('content', TextType::class, 
             //  [
             //     // 'data' => 'par defaut',
             //     // 'disabled'=> true,
@@ -52,7 +53,7 @@ class DefaultController extends AbstractController {
             //         'class' => 'my-row'
             //     ]
             //  ]
-             )
+            //  )
             //  ->add('type', ChoiceType::class,[
             //     'choices' => [
             //        'Techno' => 'techno',
@@ -71,7 +72,7 @@ class DefaultController extends AbstractController {
             
 
                 // ])
-             ->add('pays', CountryType::class,['mapped' => false] )
+            //  ->add('pays', CountryType::class,['mapped' => false] )
             //  ->add('date', DateType::class, [
             //     'mapped' =>false,
             //     'widget' => 'choice',
@@ -85,7 +86,7 @@ class DefaultController extends AbstractController {
             //  ->add('done', CheckboxType::class, ['required' => false])
             //  ->add('Submit', SubmitType::class)
             //  ->setMethod('get')
-             ->getForm();
+            //  ->getForm();
 
         $form->handleRequest($request);
         
