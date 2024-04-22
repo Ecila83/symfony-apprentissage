@@ -82,15 +82,14 @@ class DefaultController extends AbstractController {
             //     ],
             //     'days' => range(1,15),
                 // 'months' => range(1,6),            ])
-             ->add('done', CheckboxType::class, ['required' => false])
-             ->add('Submit', SubmitType::class)
+            //  ->add('done', CheckboxType::class, ['required' => false])
+            //  ->add('Submit', SubmitType::class)
             //  ->setMethod('get')
              ->getForm();
 
         $form->handleRequest($request);
         
         if($form->isSubmitted() && $form->isValid()){
-            dd($todo);
         }
         return $this->render('page1.html.twig', ['myform'=>$form->createView()]);
       
