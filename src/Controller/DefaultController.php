@@ -22,6 +22,7 @@ use Symfony\Component\DependencyInjection\ContainerInterface;
 use Symfony\Component\Routing\Generator\UrlGeneratorInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Psr\Container\ContainerInterface as ContainerContainerInterface;
+use Symfony\Component\HttpFoundation\RequestStack;
 use Symfony\Component\Validator\Constraints\Length;
 use Symfony\Component\Validator\Constraints\Email;
 
@@ -33,7 +34,15 @@ class DefaultController extends AbstractController {
     // }
 
     #[Route('/')]
-    public function index(Request $request){
+    public function index(Request $request, RequestStack $requestStack){
+        $session = $requestStack->getSession();
+
+        // $session->set('myvar', 123);
+        // dump($session->get('myvar'));
+        // dump($session->get('test', 'defaut'));
+        $session->getId();
+
+        dd($session);
 
         $todo = new Todo('Je suis une todo', 'techno');
 
