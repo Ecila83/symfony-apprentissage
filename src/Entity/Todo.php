@@ -3,64 +3,64 @@
 namespace App\Entity;
 
 use App\Repository\TodoRepository;
+use DateTime;
 use Doctrine\ORM\Mapping as ORM;
 
 #[ORM\Entity(repositoryClass: TodoRepository::class)]
 class Todo
 {
-    #[ORM\Id]
-    #[ORM\GeneratedValue]
-    #[ORM\Column]
-    private ?int $id = null;
+  #[ORM\Id]
+  #[ORM\GeneratedValue]
+  #[ORM\Column(type: "integer")]
+  private $id;
 
-    #[ORM\Column(length: 255)]
-    private ?string $content = null;
+  #[ORM\Column(type: "string", length: 255)]
+  private $content;
 
-    #[ORM\Column]
-    private ?bool $done = null;
+  #[ORM\Column(type: "boolean", options: ['default' => false])]
+  private $done = false;
 
-    #[ORM\Column]
-    private ?\DateTimeInterface $createdAt;
-   
+  #[ORM\Column(type: "datetime", options: ['default' => 'CURRENT_TIMESTAMP'])]
+  private $createdAt;
 
-    public function getId(): ?int
-    {
-        return $this->id;
-    }
+  public function getId(): ?int
+  {
+    return $this->id;
+  }
 
-    public function getContent(): ?string
-    {
-        return $this->content;
-    }
+  public function getContent(): ?string
+  {
+    return $this->content;
+  }
 
-    public function setContent(string $content): static
-    {
-        $this->content = $content;
+  public function setContent(string $content): self
+  {
+    $this->content = $content;
 
-        return $this;
-    }
+    return $this;
+  }
 
-    public function isDone(): ?bool
-    {
-        return $this->done;
-    }
+  public function getDone(): ?bool
+  {
+    return $this->done;
+  }
 
-    public function setDone(bool $done): static
-    {
-        $this->done = $done;
+  public function setDone(bool $done): self
+  {
+    $this->done = $done;
 
-        return $this;
-    }
+    return $this;
+  }
 
-    public function getCreatedAt(): ?string
-    {
-        return $this->createdAt;
-    }
+  public function getCreatedAt(): ?DateTime
+  {
+    return $this->createdAt;
+  }
 
-    public function setCreatedAt(string $createdAt): static
-    {
-        $this->createdAt = $createdAt;
+  public function setCreatedAt( $createdAt): self
+  {
+    $this->createdAt = $createdAt;
 
-        return $this;
-    }
+    return $this;
+  }
 }

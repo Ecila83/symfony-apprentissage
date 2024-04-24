@@ -2,12 +2,12 @@
 
 namespace App\Controller;
 
+use App\Entity\Todo;
 use App\Form\TodoType;
-use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
-use Symfony\Component\HttpFoundation\Cookie;
 use Symfony\Component\HttpFoundation\Request;
-use Symfony\Component\HttpFoundation\RequestStack;
 use Symfony\Component\Routing\Annotation\Route;
+use Symfony\Component\HttpFoundation\RequestStack;
+use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 
 class DefaultController extends AbstractController
 {
@@ -16,35 +16,20 @@ class DefaultController extends AbstractController
   }
 
   #[Route('/', name: 'index')]
-  public function index(Request $request, RequestStack $requestStack)
+  public function index(Request $request)
   {
-    $cookie= Cookie::create('Cook',123);
-    $cookie->withHttpOnly(true);
     $todo = new Todo();
-    $form = $this->createForm(TodoType::class, $todo);
+    $todoForm = $this->createForm(TodoType::class, $todo);
 
-    $form->handleRequest($request);
+    $todoForm->handleRequest($request);
 
-    if ($form->isSubmitted() && $form->isValid()) {
-      $this->addFlash('success', 'La todo est valide');
-    } else if ($form->isSubmitted() && !$form->isValid()) {
-      $this->addFlash('error', 'La todo n\'est pas valide');
+    if($todoForm->isSubmitted() && $todoForm->isValid()) {
+
     }
 
-    $reponse = $this->render('page1.html.twig', [
-      'myform' => $form->createView()
+    return $this->render('page1.html.twig',[
+      'form' => $todoForm->createView()
     ]);
-    $reponse->headers->setCookie($cookie);
-
-    return $reponse;
   }
 }
 
-class Todo
-{
-  function  __construct(
-    public string $content = '',
-    public ?string $pays = null,
-  ) {
-  }
-}

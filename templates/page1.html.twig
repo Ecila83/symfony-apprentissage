@@ -58,21 +58,9 @@
         }
     </style>
 
-{{form_start(myform)}}
+{{form_start(form)}}
     <div class="form-container">
-        {{ form_row(myform.content, {'row_attr': {'class': 'form-row'}}) }}
-        {{ form_row(myform.pays, {'row_attr': {'class': 'form-row'}}) }}
-
-        {# <div class="form-row">
-            {{form_label(myform.content)}}
-            {{form_widget(myform.content)}}
-            {{form_errors(myform.content)}}
-        </div>   
-         <div class="form-row">
-            {{form_label(myform.pays)}}
-            {{form_widget(myform.pays)}}
-            {{form_errors(myform.pays)}}
-        </div>   #}
+        {{form_rest(form)}}
         <button type='submit' class='btn btn-primary'>Sauvegarder</button>        
     </div>
 
@@ -89,6 +77,6 @@
     {{form_errors(myform.pays)}}
 </ul>  #}
 
-{{form_end(myform)}}
+{{form_end(form)}}
 
 {% endblock %}
