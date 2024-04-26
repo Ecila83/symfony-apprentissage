@@ -4,6 +4,7 @@ namespace App\Controller;
 
 use App\Entity\Todo;
 use App\Form\TodoType;
+use App\Repository\TodoRepository;
 use DateTime;
 use Doctrine\ORM\EntityManagerInterface;
 use Doctrine\ORM\Mapping\Entity;
@@ -18,9 +19,28 @@ class DefaultController extends AbstractController
   {
   }
 
-  #[Route('/', name: 'index')]
-  public function index(Request $request,EntityManagerInterface $em)
+  #[Route('/', name: 'home')]
+  public function index(TodoRepository $repo)
   {
+    // $todos =$repo->findAll();
+    // $todos =[$repo->find(3)];
+    $todos =$repo->findBy([
+      'id' => [2,5],
+    ],
+    [
+      'content' => 'DESC'
+    ],2,1);
+
+
+    if(!$todos){
+      throw $this->createNotFoundException('Pas de todos');
+    }
+
+    return $this->render('home.html.twig', ['todos' => $todos]);
+  }
+
+  #[Route('/form', name: 'todo_form')]
+  public function form(Request $request,EntityManagerInterface $em){
     $todo = new Todo();
     $todoForm = $this->createForm(TodoType::class, $todo);
 
@@ -31,9 +51,10 @@ class DefaultController extends AbstractController
 
       $em->persist($todo);
       $em->flush();
+      return $this->redirectToRoute('home');
     }
 
-    return $this->render('page1.html.twig',[
+    return $this->render('todo_form.html.twig',[
       'form' => $todoForm->createView()
     ]);
   }

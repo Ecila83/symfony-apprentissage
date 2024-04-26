@@ -1,0 +1,17 @@
+{% extends "base.html.twig" %}
+
+{% block body %}
+	<a href="{{path('todo_form')}}">Créer une todo</a>
+	<br>
+	<ul>
+		{% for todo in todos %}
+			<li>
+				<span>{{todo.id}}</span>
+				<span>{{todo.content}}</span>
+				<span>{{todo.done}}</span>
+				<span>{{todo.createdat | date()}}</span>
+			</li>
+		{% endfor %}
+	</ul>
+
+{% endblock %}
