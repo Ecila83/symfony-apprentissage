@@ -13,8 +13,7 @@ class TodoType extends AbstractType
     {
         $builder
             ->add('content')
-            ->add('done')
-            ->add('createdAt')
+
         ;
     }
 
