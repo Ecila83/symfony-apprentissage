@@ -10,7 +10,7 @@
 				<span>{{todo.content}}</span>
 				<span>{{todo.done}}</span>
 				<span>{{todo.createdat | date()}}</span>
-				<a href="{{path('todo_edit', {id: todo.id})}}">Edit</a>
+				<a href="{{path('todo_edit', {toto: todo.id})}}">Edit</a>
 				<a href="{{path('todo_remove', {id: todo.id})}}">Suprimer</a>
 
 			</li>

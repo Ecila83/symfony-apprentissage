@@ -5,12 +5,10 @@ namespace App\Controller;
 use App\Entity\Todo;
 use App\Form\TodoType;
 use App\Repository\TodoRepository;
-use DateTime;
 use Doctrine\ORM\EntityManagerInterface;
-use Doctrine\ORM\Mapping\Entity;
+use Symfony\Bridge\Doctrine\Attribute\MapEntity;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\Routing\Annotation\Route;
-use Symfony\Component\HttpFoundation\RequestStack;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\Form\Extension\Core\Type\CheckboxType;
 
@@ -43,24 +41,30 @@ class DefaultController extends AbstractController
   }
 
   #[Route('/form', name: 'todo_form')]
-  #[Route('/edit/{id}', name: 'todo_edit')]
-  public function form(Request $request,EntityManagerInterface $em, ?int $id, TodoRepository $repo){
+  #[Route('/edit/{toto}', name: 'todo_edit')]
+  #[Route('/edit/{toto}/{start}', name: 'todo_edit_start')]
 
-    if ($id){
-      $todo= $repo->find($id);
-    }else{
+  public function form(Request $request,EntityManagerInterface $em,?\DateTime $start, #[MapEntity(mapping:['toto' => 'id'])] ?Todo $todo){
+    $edit = $todo ? true:false;
+
+    dump($start);
+
+    if (!$edit){
+      if($request->attributes->get('_route')==="todo_edit"){
+        return $this->redirectToRoute('home');
+      }
       $todo = new Todo();
     }
    
     $todoForm = $this->createForm(TodoType::class, $todo);
-    if ($id){
+    if ($edit){
       $todoForm->add('done', CheckboxType::class, ['required' => false]);
     }
 
     $todoForm->handleRequest($request);
 
     if($todoForm->isSubmitted() && $todoForm->isValid()) {
-      if(!$id){ 
+      if(!$edit){ 
       $todo->setCreatedAt(new \DateTime());
     }
 
