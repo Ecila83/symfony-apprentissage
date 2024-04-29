@@ -4,6 +4,7 @@ namespace App\Repository;
 
 use App\Entity\Todo;
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
+use Doctrine\ORM\EntityManager;
 use Doctrine\Persistence\ManagerRegistry;
 
 /**
@@ -19,6 +20,25 @@ class TodoRepository extends ServiceEntityRepository
     public function __construct(ManagerRegistry $registry)
     {
         parent::__construct($registry, Todo::class);
+    }
+
+    public function findAllWithPriorityMoreThan($priority)
+    {
+        return $this->createQueryBuilder('t')
+                    ->where('t.priority > :priority')
+                    ->setParameter('priority', $priority)
+                    ->andWhere('t.done != false')
+                    ->setMaxResults(3)
+                    ->orderBy('t.content', 'DESC')
+                    ->getQuery()
+                    ->getResult();
+    }
+
+    public function findAllWithPriorityMoreThanDKL($priority, EntityManager $em){
+
+        $query =$em->createQuery('SELECT t FROM App\Entity\Todo t WHERE t.priority > :priority AND t.done != false ORDER BY t.content ASC')->setMaxResults(2);
+        return $query->execute(['priority'=> $priority]);
+
     }
 
     //    /**

@@ -4,6 +4,7 @@ namespace App\Entity;
 
 use App\Repository\TodoRepository;
 use DateTime;
+use Doctrine\DBAL\Types\Types;
 use Doctrine\ORM\Mapping as ORM;
 
 #[ORM\Entity(repositoryClass: TodoRepository::class)]
@@ -19,6 +20,9 @@ class Todo
 
   #[ORM\Column(type: "boolean", options: ['default' => false])]
   private $done = false;
+
+  #[ORM\Column(type: "integer")]
+  private $priority;
 
   #[ORM\Column(type: "datetime", options: ['default' => 'CURRENT_TIMESTAMP'])]
   private $createdAt;
@@ -62,5 +66,22 @@ class Todo
     $this->createdAt = $createdAt;
 
     return $this;
+  }
+
+  public function isDone(): ?bool
+  {
+      return $this->done;
+  }
+
+  public function getPriority(): ?int
+  {
+      return $this->priority;
+  }
+
+  public function setPriority(int $priority): static
+  {
+      $this->priority = $priority;
+
+      return $this;
   }
 }

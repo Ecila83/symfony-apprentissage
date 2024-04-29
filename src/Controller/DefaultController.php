@@ -23,14 +23,7 @@ class DefaultController extends AbstractController
   {
     // $todos =$repo->findAll();
     // $todos =[$repo->find(3)];
-    $todos =$repo->findAll(
-      // [
-    //   'id' => [2,5],
-    // ],
-    // [
-    //   'content' => 'DESC'
-    // ],2,1
-  );
+    $todos =$repo->findAllWithPriorityMoreThan(1);
 
 
     if(!$todos){
