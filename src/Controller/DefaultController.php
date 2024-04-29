@@ -12,6 +12,7 @@ use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Component\HttpFoundation\RequestStack;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
+use Symfony\Component\Form\Extension\Core\Type\CheckboxType;
 
 class DefaultController extends AbstractController
 {
@@ -24,12 +25,14 @@ class DefaultController extends AbstractController
   {
     // $todos =$repo->findAll();
     // $todos =[$repo->find(3)];
-    $todos =$repo->findBy([
-      'id' => [2,5],
-    ],
-    [
-      'content' => 'DESC'
-    ],2,1);
+    $todos =$repo->findAll(
+      // [
+    //   'id' => [2,5],
+    // ],
+    // [
+    //   'content' => 'DESC'
+    // ],2,1
+  );
 
 
     if(!$todos){
@@ -40,14 +43,26 @@ class DefaultController extends AbstractController
   }
 
   #[Route('/form', name: 'todo_form')]
-  public function form(Request $request,EntityManagerInterface $em){
-    $todo = new Todo();
+  #[Route('/edit/{id}', name: 'todo_edit')]
+  public function form(Request $request,EntityManagerInterface $em, ?int $id, TodoRepository $repo){
+
+    if ($id){
+      $todo= $repo->find($id);
+    }else{
+      $todo = new Todo();
+    }
+   
     $todoForm = $this->createForm(TodoType::class, $todo);
+    if ($id){
+      $todoForm->add('done', CheckboxType::class, ['required' => false]);
+    }
 
     $todoForm->handleRequest($request);
 
     if($todoForm->isSubmitted() && $todoForm->isValid()) {
+      if(!$id){ 
       $todo->setCreatedAt(new \DateTime());
+    }
 
       $em->persist($todo);
       $em->flush();
@@ -58,5 +73,7 @@ class DefaultController extends AbstractController
       'form' => $todoForm->createView()
     ]);
   }
+
 }
+
 

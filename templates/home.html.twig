@@ -10,6 +10,7 @@
 				<span>{{todo.content}}</span>
 				<span>{{todo.done}}</span>
 				<span>{{todo.createdat | date()}}</span>
+				<a href="{{path('todo_edit', {id: todo.id})}}">Edit</a>
 			</li>
 		{% endfor %}
 	</ul>
