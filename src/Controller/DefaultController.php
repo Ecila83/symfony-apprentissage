@@ -74,6 +74,15 @@ class DefaultController extends AbstractController
     ]);
   }
 
+  #[Route('/remove/{id}', name: 'todo_remove')]
+  public function remove(int $id,TodoRepository $repo,EntityManagerInterface $em,){
+    $todo = $repo->find($id);
+    $em->remove($todo);
+    $em->flush();
+
+    return $this->redirectToRoute('home');
+  }
+
 }
 
 
