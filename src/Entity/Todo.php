@@ -27,6 +27,9 @@ class Todo
   #[ORM\Column(type: "datetime", options: ['default' => 'CURRENT_TIMESTAMP'])]
   private $createdAt;
 
+  #[ORM\ManyToOne(inversedBy: 'todos')]
+  private ?Author $author = null;
+
   public function getId(): ?int
   {
     return $this->id;
@@ -81,6 +84,18 @@ class Todo
   public function setPriority(int $priority): static
   {
       $this->priority = $priority;
+
+      return $this;
+  }
+
+  public function getAuthor(): ?Author
+  {
+      return $this->author;
+  }
+
+  public function setAuthor(?Author $author): static
+  {
+      $this->author = $author;
 
       return $this;
   }

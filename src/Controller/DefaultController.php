@@ -3,14 +3,16 @@
 namespace App\Controller;
 
 use App\Entity\Todo;
+use App\Entity\Author;
 use App\Form\TodoType;
+use App\Repository\AuthorRepository;
 use App\Repository\TodoRepository;
 use Doctrine\ORM\EntityManagerInterface;
-use Symfony\Bridge\Doctrine\Attribute\MapEntity;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\Routing\Annotation\Route;
-use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
+use Symfony\Bridge\Doctrine\Attribute\MapEntity;
 use Symfony\Component\Form\Extension\Core\Type\CheckboxType;
+use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 
 class DefaultController extends AbstractController
 {
@@ -78,6 +80,31 @@ class DefaultController extends AbstractController
     $em->flush();
 
     return $this->redirectToRoute('home');
+  }
+
+  #[Route('/test', name: 'test')]
+  public function test(EntityManagerInterface $em,TodoRepository $todoRepo, AuthorRepository $authorRepo){
+    // $author = new Author();
+    // $author->setName('Jean');
+    // $em->persist($author);
+    // $em->flush();
+    $todo = $todoRepo->find(1);
+    // dump($todo->getAuthor()->getName());
+    $author = $authorRepo->find(1);
+    // $todo = $author->getTodos()[0];
+
+    $author->addTodo($todo);
+    // dump($author->getTodos());
+    // $todo->setAuthor($author);
+    $em->persist($todo);
+    $em->flush();
+
+    // foreach($author->getTodos()as $todo){
+    //   dump($todo);
+    // }
+
+    return $this->render('base.html.twig');
+
   }
 
 }
