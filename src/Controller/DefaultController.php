@@ -2,11 +2,13 @@
 
 namespace App\Controller;
 
+use App\Entity\Tag;
 use App\Entity\Todo;
 use App\Entity\Author;
 use App\Form\TodoType;
-use App\Repository\AuthorRepository;
+use App\Repository\TagRepository;
 use App\Repository\TodoRepository;
+use App\Repository\AuthorRepository;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\Routing\Annotation\Route;
@@ -83,21 +85,33 @@ class DefaultController extends AbstractController
   }
 
   #[Route('/test', name: 'test')]
-  public function test(EntityManagerInterface $em,TodoRepository $todoRepo, AuthorRepository $authorRepo){
+  public function test(EntityManagerInterface $em,TodoRepository $todoRepo, AuthorRepository $authorRepo, TagRepository $tagRepo){
     // $author = new Author();
     // $author->setName('Jean');
     // $em->persist($author);
     // $em->flush();
     $todo = $todoRepo->find(1);
     // dump($todo->getAuthor()->getName());
-    $author = $authorRepo->find(1);
+    // $author = $authorRepo->find(1);
     // $todo = $author->getTodos()[0];
+    $tag= $tagRepo->find(2);
+    // foreach ($tag->getTodos() as $todo){
+    //   dump($todo);
+    // }
+    $tag->addTodo($todo);
 
-    $author->addTodo($todo);
+    // $todo->addTag($tag)
+    // $tag = new Tag();
+    // $tag->setName('politique');
+    // $em->persist($tag);
+    $em->flush();
+
+
+    // $author->addTodo($todo);
     // dump($author->getTodos());
     // $todo->setAuthor($author);
-    $em->persist($todo);
-    $em->flush();
+    // $em->persist($todo);
+    // $em->flush();
 
     // foreach($author->getTodos()as $todo){
     //   dump($todo);
